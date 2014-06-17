@@ -26,7 +26,6 @@ public:
 	bool operator<(const Stack& p_rhs) const;
 	bool operator==(const Stack& p_rhs) const;
 
-	Stack operator+(const Stack& p_rhs);
 	Stack& operator+=(const Stack& p_rhs);
 	bool can_merge(const Stack& p_rhs) const;
 

@@ -39,23 +39,13 @@ bool Stack::operator==(const Stack& p_rhs) const
 	return m_color == p_rhs.m_color && m_height == p_rhs.m_height;
 }
 
-Stack Stack::operator+(const Stack& p_rhs)
-{
-	if(p_rhs.get_color() != m_color && p_rhs.get_height() != m_height)
-	{
-		throw std::invalid_argument("Cannot add those two stacks");
-	}
-	return Stack(m_color, m_height + p_rhs.get_height());
-}
-
 Stack& Stack::operator+=(const Stack& p_rhs)
 {
 	if(p_rhs.get_color() != m_color && p_rhs.get_height() != m_height)
 	{
 		throw std::invalid_argument("Cannot add those two stacks");
 	}
-
-	m_height += p_rhs.get_height();
+	m_height += p_rhs.m_height;
 	return *this;
 }
 

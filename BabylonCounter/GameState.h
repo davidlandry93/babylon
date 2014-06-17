@@ -10,7 +10,9 @@
 
 #include <algorithm>
 #include <string>
+#include <sstream>
 #include <vector>
+#include <set>
 #include "Stack.h"
 
 namespace Babylon {
@@ -29,11 +31,13 @@ public:
 	std::vector<GameState> potential_transitions();
 	std::string to_string() const;
 
+	static bool smaller(GameState& p_lhs, GameState& p_rhs);
 private:
 	std::vector<Stack> m_stacks;
 
 	void reorder();
 	bool compare_stacks(const Stack& p_lhs, const Stack& p_rhs);
+	bool vector_contains(std::vector<GameState>, GameState);
 };
 
 

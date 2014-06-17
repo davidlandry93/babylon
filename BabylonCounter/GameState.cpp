@@ -5,7 +5,7 @@
  *      Author: dlandry
  */
 
-#include <sstream>
+
 #include "GameState.h"
 
 namespace Babylon {
@@ -49,14 +49,19 @@ GameState& GameState::move(unsigned int p_from, unsigned int p_to)
 
 std::vector<GameState> GameState::potential_transitions()
 {
-	std::vector<GameState> potential_transitions;
+	std::set<GameState> potential_transitions;
 
 	for(unsigned int i = 0; i < m_stacks.size(); i++)
 	{
-		for(unsigned int j=i; j< m_stacks.size(); j++)
+		// i+1 because we don't want self stacking.
+		for(unsigned int j=i+1; j< m_stacks.size(); j++)
 		{
 			if(m_stacks[i].can_merge(m_stacks[j]))
 			{
+				if(std::find(potential_transitions.begin(), potential_transitions.end()))
+				{
+
+				}
 				potential_transitions.push_back(GameState(*this).move(i,j));
 				potential_transitions.push_back(GameState(*this).move(j,i));
 			}
@@ -77,6 +82,11 @@ std::string GameState::to_string() const
 	oss << std::endl;
 
 	return oss.str();
+}
+
+bool GameState::smaller(GameState& p_lhs, GameState& p_rhs)
+{
+
 }
 
 std::ostream& operator<<(std::ostream& p_stream, const GameState& p_state)

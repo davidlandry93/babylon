@@ -6,22 +6,24 @@
  */
 
 #include <iostream>
+#include <vector>
 #include "Stack.h"
+#include "GameState.h"
 
 using namespace Babylon;
 
 int main(int argc, const char* argv[])
 {
-	std::cout << "Hello world!" << std::endl;
-	Stack stack = Stack(3);
-	Stack stack2 = Stack(1) + stack;
-	stack += stack;
-	stack += stack;
-	std::cout << stack;
-	std::cout << stack2;
-	std::cout << Stack::smaller(stack, stack);
-	std::cout << (stack == stack2);
-	std::cout << (stack == stack);
+	GameState state = GameState();
+	std::cout << state;
+
+	std::vector<GameState> moves = state.potential_transitions();
+
+	for(int i = 0; i< moves.size(); i++)
+	{
+		std::cout << i << moves[i];
+	}
+
 	return 0;
 }
 
