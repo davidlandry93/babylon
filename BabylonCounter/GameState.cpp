@@ -47,7 +47,12 @@ GameState& GameState::move(unsigned int p_from, unsigned int p_to)
 	return *this;
 }
 
-std::vector<GameState> GameState::potential_transitions()
+bool GameState::operator<(const GameState& p_rhs) const
+{
+	return GameState::smaller(*this, p_rhs);
+}
+
+std::set<GameState> GameState::potential_transitions()
 {
 	std::set<GameState> potential_transitions;
 
@@ -58,12 +63,8 @@ std::vector<GameState> GameState::potential_transitions()
 		{
 			if(m_stacks[i].can_merge(m_stacks[j]))
 			{
-				if(std::find(potential_transitions.begin(), potential_transitions.end()))
-				{
-
-				}
-				potential_transitions.push_back(GameState(*this).move(i,j));
-				potential_transitions.push_back(GameState(*this).move(j,i));
+				potential_transitions.insert(GameState(*this).move(i,j));
+				potential_transitions.insert(GameState(*this).move(j,i));
 			}
 		}
 	}
@@ -84,9 +85,25 @@ std::string GameState::to_string() const
 	return oss.str();
 }
 
-bool GameState::smaller(GameState& p_lhs, GameState& p_rhs)
+bool GameState::smaller(const GameState& p_lhs, const GameState& p_rhs)
 {
+	std::vector<Stack>::const_iterator left_iter = p_lhs.m_stacks.begin();
+	std::vector<Stack>::const_iterator right_iter = p_rhs.m_stacks.begin();
 
+	while(left_iter != p_lhs.m_stacks.end() &&
+			right_iter != p_rhs.m_stacks.end())
+	{
+		if(Stack::smaller(*left_iter, *right_iter))
+		{
+			left_iter++;
+			right_iter++;
+		} else {
+			return false;
+		}
+	}
+
+	// We reached the end of a word and they are still equal.
+	return p_lhs.m_stacks.size() < p_rhs.m_stacks.size();
 }
 
 std::ostream& operator<<(std::ostream& p_stream, const GameState& p_state)

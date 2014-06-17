@@ -28,10 +28,11 @@ public:
 	GameState& move(unsigned int p_from, unsigned int p_to);
 
 	friend std::ostream& operator<<(std::ostream& p_stream, const GameState& p_state);
-	std::vector<GameState> potential_transitions();
+	std::set<GameState> potential_transitions();
 	std::string to_string() const;
+	bool operator<(const GameState& p_rhs) const;
 
-	static bool smaller(GameState& p_lhs, GameState& p_rhs);
+	static bool smaller(const GameState& p_lhs, const GameState& p_rhs);
 private:
 	std::vector<Stack> m_stacks;
 

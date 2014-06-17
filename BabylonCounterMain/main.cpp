@@ -6,7 +6,7 @@
  */
 
 #include <iostream>
-#include <vector>
+#include <set>
 #include "Stack.h"
 #include "GameState.h"
 
@@ -17,9 +17,9 @@ int main(int argc, const char* argv[])
 	GameState state = GameState();
 	std::cout << state;
 
-	std::vector<GameState> moves = state.potential_transitions();
+	std::set<GameState> moves = state.potential_transitions();
 
-	for(int i = 0; i< moves.size(); i++)
+	for(unsigned int i = 0; i< moves.size(); i++)
 	{
 		std::cout << i << moves[i];
 	}
