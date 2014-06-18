@@ -39,6 +39,11 @@ bool Stack::operator==(const Stack& p_rhs) const
 	return m_color == p_rhs.m_color && m_height == p_rhs.m_height;
 }
 
+bool Stack::operator!=(const Stack& p_rhs) const
+{
+	return !operator==(p_rhs);
+}
+
 Stack& Stack::operator+=(const Stack& p_rhs)
 {
 	if(p_rhs.get_color() != m_color && p_rhs.get_height() != m_height)

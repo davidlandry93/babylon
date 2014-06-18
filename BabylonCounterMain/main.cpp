@@ -7,23 +7,14 @@
 
 #include <iostream>
 #include <set>
-#include "Stack.h"
-#include "GameState.h"
+#include "BabylonCounter.h"
 
 using namespace Babylon;
 
 int main(int argc, const char* argv[])
 {
-	GameState state = GameState();
-	std::cout << state;
-
-	std::set<GameState> moves = state.potential_transitions();
-
-	for(unsigned int i = 0; i< moves.size(); i++)
-	{
-		std::cout << i << moves[i];
-	}
-
+	BabylonCounter counter = BabylonCounter();
+	counter.start_counting();
 	return 0;
 }
 

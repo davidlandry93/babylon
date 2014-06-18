@@ -9,6 +9,7 @@
 #define GAMESTATE_H_
 
 #include <algorithm>
+#include <iostream>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -28,17 +29,17 @@ public:
 	GameState& move(unsigned int p_from, unsigned int p_to);
 
 	friend std::ostream& operator<<(std::ostream& p_stream, const GameState& p_state);
-	std::set<GameState> potential_transitions();
+	std::set<GameState> potential_transitions() const;
 	std::string to_string() const;
 	bool operator<(const GameState& p_rhs) const;
+	bool operator==(const GameState& p_rhs) const;
 
 	static bool smaller(const GameState& p_lhs, const GameState& p_rhs);
+	static bool equal(const GameState& p_lhs, const GameState& p_rhs);
 private:
 	std::vector<Stack> m_stacks;
 
 	void reorder();
-	bool compare_stacks(const Stack& p_lhs, const Stack& p_rhs);
-	bool vector_contains(std::vector<GameState>, GameState);
 };
 
 

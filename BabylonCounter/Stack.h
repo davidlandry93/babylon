@@ -25,6 +25,7 @@ public:
 	static bool smaller(const Stack& p_lhs, const Stack& p_rhs);
 	bool operator<(const Stack& p_rhs) const;
 	bool operator==(const Stack& p_rhs) const;
+	bool operator!=(const Stack& p_rhs) const;
 
 	Stack& operator+=(const Stack& p_rhs);
 	bool can_merge(const Stack& p_rhs) const;

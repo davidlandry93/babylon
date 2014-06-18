@@ -52,7 +52,7 @@ bool GameState::operator<(const GameState& p_rhs) const
 	return GameState::smaller(*this, p_rhs);
 }
 
-std::set<GameState> GameState::potential_transitions()
+std::set<GameState> GameState::potential_transitions() const
 {
 	std::set<GameState> potential_transitions;
 
@@ -93,17 +93,40 @@ bool GameState::smaller(const GameState& p_lhs, const GameState& p_rhs)
 	while(left_iter != p_lhs.m_stacks.end() &&
 			right_iter != p_rhs.m_stacks.end())
 	{
-		if(Stack::smaller(*left_iter, *right_iter))
+		if(!Stack::smaller(*left_iter, *right_iter) && !Stack::smaller(*right_iter, *left_iter))
 		{
+			// The two stacks are equal.
 			left_iter++;
 			right_iter++;
 		} else {
-			return false;
+			// The stacks are unequal.
+			return Stack::smaller(*left_iter, *right_iter);
 		}
 	}
 
-	// We reached the end of a word and they are still equal.
+	// We reached the end of a word and they are still equal. The longest is the largest.
 	return p_lhs.m_stacks.size() < p_rhs.m_stacks.size();
+}
+
+bool GameState::operator==(const GameState& p_rhs) const
+{
+	return GameState::equal(*this, p_rhs);
+}
+
+bool GameState::equal(const GameState& p_lhs, const GameState& p_rhs)
+{
+	if(p_lhs.m_stacks.size() == p_rhs.m_stacks.size())
+	{
+		for(unsigned int i=0; i < p_lhs.m_stacks.size(); i++)
+		{
+			if(p_lhs.m_stacks[i] != p_rhs.m_stacks[i])
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	return false;
 }
 
 std::ostream& operator<<(std::ostream& p_stream, const GameState& p_state)
